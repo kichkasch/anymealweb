@@ -7,7 +7,7 @@
 
 $host = "localhost";
 $user = "anymeal";
-$pass = "hd5hainer";
+$pass = "anypass";
 $database = "anymeal";
 
 
