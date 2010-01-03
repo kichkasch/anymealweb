@@ -2,8 +2,8 @@
 
 <?php 
 /* !--
-  JuMiMeal - Anymeal Web Frontend - V 0.1 - 2008-11-11
-  by Michael Pilgermann (michael.pilgermann@gmx.de / http://www.kichkasch.de)
+  JuMiMeal - Anymeal Web Frontend
+  by Michael Pilgermann (kichkasch@gmx.de)
   
     Copyright (C) 2008  Michael Pilgermann
 
@@ -53,7 +53,7 @@
 
 */
 
-include 'photoconfig.php';
+include 'config.php';
 include 'photomenu.php';
 include 'tools.php';
 

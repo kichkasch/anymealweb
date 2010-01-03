@@ -2,8 +2,8 @@
 
 <?php 
 /* !--
-  JuMiMeal - Anymeal Web Frontend - V 0.1 - 2008-11-11
-  by Michael Pilgermann (michael.pilgermann@gmx.de / http://www.kichkasch.de)
+  JuMiMeal - Anymeal Web Frontend
+  by Michael Pilgermann (kichkasch@gmx.de)
   
     Copyright (C) 2008  Michael Pilgermann
 
@@ -56,10 +56,7 @@
 $cat=$_REQUEST['category'];
 $rec_id=$_REQUEST['recipe_id'];
 
-$host = "localhost";
-$user = "anymeal";
-$pass = "hd5hainer";
-$database = "anymeal";
+include 'config.php';
 
 if (isset ($cat)) {
 	$page = "cat";

@@ -1,6 +1,6 @@
 <?php 
 
-/* nicked from http://www.hawkee.com/snippet/1281/ */
+/* borrowed from http://www.hawkee.com/snippet/1281/ */
 function directoryToArray($directory, $extension="", $full_path = true) {
 	$array_items = array();
 	if ($handle = opendir($directory)) {

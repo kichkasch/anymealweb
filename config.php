@@ -1,7 +1,7 @@
 <?php
 /* 
 
-	Processing / Initializing
+	Apply your database settings here
 
 */
 
@@ -13,7 +13,7 @@ $database = "anymeal";
 
 /* !--
 
-END processing
+	end configuration
 
 */
 ?>
