@@ -1,0 +1,13 @@
+Source: anymealweb
+Section: web
+Priority: optional
+Maintainer: Michael Pilgermann <kichkasch@gmx.de>
+Build-Depends: cdbs (>= 0.4.49), debhelper (>= 7), quilt, patchutils (>= 0.2.25)
+Standards-Version: 3.8.3.0
+Homepage: http://github.com/kichkasch/anymealweb
+
+Package: anymealweb
+Architecture: all
+Depends: apache2, php5, php5-mysql, anymeal, ${misc:Depends}
+Description: PHP based web frontend for recipe management software AnyMeal
+ anymealWeb is a web based front end for the great recipe management software anymeal.

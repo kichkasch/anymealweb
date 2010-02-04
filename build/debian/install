@@ -1,0 +1,3 @@
+*.php *.css var/www/anymeal
+img/* var/www/anymeal/img
+images/* var/www/anymeal/images/

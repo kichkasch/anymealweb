@@ -1,0 +1,7 @@
+*bfproject
+*~
+*deb
+*tar.gz
+build/*source.changes
+build/*source.kichkasch-ppa.upload
+build/*.dsc

@@ -16,7 +16,7 @@ function printFooter()
 {
 ?>
 
-<div class="footer">&copy; 2009 <a href="mailto:kichkasch@gmx.de">Michael Pilgermann</a>. Design by <a href="http://www.arcsin.se">Arcsin</a></div>
+<div class="footer">&copy; 2010 <a href="mailto:kichkasch@gmx.de">Michael Pilgermann</a>. Design by <a href="http://www.arcsin.se">Arcsin</a></div>
 
 <?php
 }

@@ -38,7 +38,7 @@
 <meta name="Copyright" content="Michael Pilgermann" />
 <meta name="Designed By" content="www.kichkasch.de" />
 <meta name="Language" content="English" />
-<title>JuMiMeal - An AnyMeal Webfrontend</title>
+<title>JuMiMeal - An AnyMeal Webfrontend (v0.1)</title>
 
 <!-- All Images Created And Copyrighted By Christina Chun Unless Noted Otherwise.  All rights Reserved. -->
 
@@ -117,7 +117,7 @@ if (! strcmp($page, "detail")){
 </div>
 
 <div class="bottom"></div>
-<div class="footer">Designed By <a href="http://www.christinachun.com" title="Christina Chun - Digital Artist &amp; Web Designer">Christina Chun</a> &copy; 2005-2006 | Content By <a href="mailto:michael.pilgermann@gmx.de" title="Email to Michael Pilgermann">Michael Pilgermann</a> &copy; 2008</div>
+<div class="footer">Designed By <a href="http://www.christinachun.com" title="Christina Chun - Digital Artist &amp; Web Designer">Christina Chun</a> &copy; 2005-2006 | Content By <a href="mailto:michael.pilgermann@gmx.de" title="Email to Michael Pilgermann">Michael Pilgermann</a> &copy; 2010</div>
 </div></div>
 </body>
 </html>
@@ -154,15 +154,12 @@ $anzahlRecs = $row['title'];
 
 <p><div id="contentHeading">JuMiMeal - das Rezeptebuch f&uuml;r Jule und Micha</div></p>
 
-<p>JuMiMeal ist das Webfrontend f&uuml;r die Rezeptedatenbank von Jule und Micha. Rezepte sind nat&uuml;rlich haupts&auml;chlich Hausrezepte von Eltern und Gro&szlig;eltern und decken ein breites Spektrum ab.</p>
+<p>JuMiMeal ist ein Webfrontend f&uuml;r die Rezeptedatenbank von Anymeal.</p>
 
 <p>Um ein Rezept anzuzeigen, kann man oben aus einem der Schl&uuml;sselworte ausw&auml;hlen - es wird dann eine Liste mit m&ouml;glichen Treffern angezeigt. Alternativ k&ouml;nnen auch s&auml;mtliche Rezepte in einer Liste angezeigt werden.</p>
 
 <p><div id="contentHeading">Inhalt aktuell</div></p>
 <p>Es befinden sich aktuell <?php print ("<" . $anzahlRecs . ">") ?> Rezepte aufgeteilt auf insgesamt <?php print ("<" . $anzahlCats . ">") ?> Kategorien in der Datenbank.</p>
-
-<p><div id="contentHeading">Neue Rezepte einstellen</div></p>
-<p>JuMiMeal ist lediglich ein Viewer f&uuml;r die Rezepte. Das eigentliche Programm f&uuml;r die Rezepteverwaltung ist <a href="http://www.wedesoft.demon.co.uk/anymeal-api/">Anymeal</a>. Es l&auml;uft nur unter Linux und ist momentan auf Michas Rechner installiert. Zum Speichern der Rezepte wird auf die gleiche Datenbank zugegriffen, was eine Konsistenz der Daten sicherstellt.</p>
 
 				</div>
 		</div>

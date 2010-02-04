@@ -1,0 +1,17 @@
+anymealweb (0.1-0ubuntu3) karmic; urgency=low
+
+  * Remove some more <home use> comments in front end
+
+ -- Michael Pilgermann <kichkasch@gmx.de>  Thu, 04 Feb 2010 21:23:04 +0100
+
+anymealweb (0.1-0ubuntu2) karmic; urgency=low
+
+  * Remove some <home use> comments in front end
+
+ -- Michael Pilgermann <kichkasch@gmx.de>  Thu, 04 Feb 2010 20:57:42 +0100
+
+anymealweb (0.1-0ubuntu1) karmic; urgency=low
+
+  * Initial Release
+
+ -- Michael Pilgermann <kichkasch@gmx.de>  Thu, 04 Feb 2010 20:29:58 +0100
