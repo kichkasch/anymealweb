@@ -21,7 +21,9 @@
 															}
 														}
 													});                                
-                                $( "#accordion" ).accordion();
+                                $( "#accordion" ).accordion( {
+                                		collapsible:true
+                                		});
                                 $( "#radio" ).buttonset();
                                 $( "#bAdd" ).button();
                                 
@@ -40,8 +42,24 @@
 								} );
 								
 								function catSelected(category) {
-    									alert(category)
-									}
+										$( "#accordion" ).accordion('activate', false);
+    									$( "#accordion" ).children('h3').each(function(){
+    										var heading = $(this);
+    										if (category == '0')
+    										{
+    											heading.show();
+    										} else {
+	    										heading.hide();
+	    										$(this).children('input').each(function(){
+	    											var kid = $(this);
+		    										if (! kid.attr("category").indexOf(category)) {
+		    											heading.show();
+													}   
+												}); 	
+											}											
+    									});
+    									//alert(category + st );
+									};
 
                 </script>
                 <style type="text/css">
@@ -113,8 +131,40 @@ $query = "SELECT RECIPE.TITLE as TITLE, RECIPE.ID as ID FROM RECIPE ORDER BY TIT
 $resultID = mysql_query($query, $linkID) or die("Data not found.");
 for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
  $row = mysql_fetch_assoc($resultID);
- print("<h3><a href='#'>" . $row['TITLE'] .  "</a></h3>");
- print("<div>Content</div>");
+ print("<h3><a href='#'>" . $row['TITLE'] .  "</a>");
+ 
+ $query2 = "SELECT CATEGORIES.NAME as NAME FROM CATEGORIES, CATEGORY WHERE CATEGORIES.ID = CATEGORY.CATEGORYID AND CATEGORY.RECIPEID = " . $row['ID'] . " ORDER BY NAME";
+ $resultID2 = mysql_query($query2, $linkID) or die("Data not found.");
+ for($y = 0 ; $y < mysql_num_rows($resultID2) ; $y++){
+    $row2 = mysql_fetch_assoc($resultID2);
+ 	$cats[] = $row2['NAME'];
+	print("<input type='hidden' category='" . $row2['NAME'] .  "'/>");
+ }
+ ?>
+ </h3>
+ <div>
+ <table width="100%">
+ <thead>
+ <th>Ingredients</th>
+ <th>Preparation</th>
+ <th width="10%">Categories</th> 
+ </thead>
+ <tr>
+ <td>n.a.</td>
+ <td>n.a.</td>
+ <td>
+<?php
+ foreach ($cats as $cat) {
+print($cat);
+print("<br/>");
+}
+unset($cats);
+?> 
+ </td>
+ </tr>
+ </table> 
+ </div>
+<?php
 }
 ?>
 
