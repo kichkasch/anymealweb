@@ -16,19 +16,58 @@
                 <script type="text/javascript">
 
                         $(function(){
+											var availableUnits = [
+												"Liter",
+												"Gramm",
+												"Kilogramm",
+												"Milliliter",
+												"Esslöffel",
+												"Teelöffel",
+												"Stück",
+												"Päckchen",
+												"Flasche",
+												"Glas",
+												"Dose",
+												"Packung",
+												"Paket"
+											]; 
+											$('#ingUnit').autocomplete({
+													source: availableUnits
+												});                    	
+
+											var arrayIngredients = new Array();                        	
+                        	
 										  $( "#dialogAdd" ).dialog({
 														autoOpen: false,
 														modal: true,
 														width: 400,
 														buttons: {
 															"Add this Recipe": function() {
+																saveRecipe(arrayIngredients);
 																$( this ).dialog( "close" );
 															},
 															Cancel: function() {
 																$( this ).dialog( "close" );
 															}
 														}
-													});                                
+													});         
+													
+										  $( "#dialogAddIngredient" ).dialog({
+														autoOpen: false,
+														modal: true,
+														width: 300,
+														buttons: {
+															"Add this Ingredient": function() {
+																$("#ingredients").tinytbl('append', $('<tr><td>' + $('#ingAmount').val() + '</td><td>' + $('#ingUnit').val() + '</td><td>' + $('#ingIngredient').val() + '</td></tr>'));
+																var lineEntry = [$('#ingAmount').val(),$('#ingUnit').val(), $('#ingIngredient').val()];
+																arrayIngredients.push(lineEntry);
+																$( this ).dialog( "close" );
+															},
+															Cancel: function() {
+																$( this ).dialog( "close" );
+															}
+														}
+													});                       
 										  $( "#dialogRecipeCategory" ).dialog({
 														autoOpen: false,
 														modal: true,
@@ -40,7 +79,16 @@
 																$( this ).dialog( "close" );
 															}
 														}
-													});                                
+													});        
+										  $("#dialog-insertComplete").dialog({
+													autoOpen: false,
+													modal: true,
+													buttons: {
+														Ok: function() {
+															$( this ).dialog( "close" );
+														}
+													}
+												});                        
                                 $( "#accordion" ).accordion( {
                                 		collapsible:true
                                 		});
@@ -51,16 +99,19 @@
                                 
                                 $( "#bAdd" ).click(function() {
 												$( "#dialogAdd" ).dialog( "open" );
+													 arrayIngredients.splice(0, arrayIngredients.length); // reset
 											       convertTable($("#ingredients"));
-												
+											       $("#recipeName").val("");
+											       $("#preparation").val("");
 												return false;
 											});
 											
 											$( "#bAddIngredient" ).click(function() {
-												$("#ingredients").tinytbl('append', $('<tr><td>200</td><td>Gramm</td><td>Mehl</td></tr>'));
+												$( "#dialogAddIngredient" ).dialog( "open" );
 												return false;
 												});
 											$( "#bClearIngredientList" ).click(function() {
+												arrayIngredients.splice(0, arrayIngredients.length);
 												recoverTable($("#ingredients"));
 												$("#ingredients tbody").empty();
 												convertTable($("#ingredients"));
@@ -117,6 +168,36 @@
 									$( "#dialogRecipeCat_recipeName" ).text(recipeId);
 									$( "#dialogRecipeCategory" ).dialog( "open" );
 									}
+									
+								function saveRecipe(arrayIngredients) {
+									 st = "saving" + "\n" + $("#recipeName").val();
+									 
+									 st = st+ "\nZutaten:\n";
+									 recoverTable($("#ingredients"));
+									 arrayIngredients.forEach(function(v, k) {
+									 	st = st + "- " + v[0] + " " + v[1] + " " + v[2] + "\n";
+									 	});
+									 st = st + "\n\nZubereitung:\n" + $("#preparation").val();
+									 //alert(st);
+									 console.log(st);
+									 
+									 var jsonRet = new Object;
+									 jsonRet.title = $("#recipeName").val();
+									 jsonRet.preparation = $("#preparation").val();
+									 jsonRet.ingredientCount = arrayIngredients.length;
+									 jsonRet.ingredients = arrayIngredients;
+									 stJson = JSON.stringify(jsonRet);
+									 console.log(stJson);
+
+									 $.ajax({
+											type: "POST",
+											url: "ajaxHandler.php",
+											data: "action=addRecipe& json=" + stJson,
+											success: function(){
+													$("#dialog-insertComplete").dialog("open");
+												}
+										});						 
+									}
 
                 </script>
                 <style type="text/css">
@@ -140,14 +221,21 @@ include 'config.php';
                 
 <div class="demo">
 
+<div id="dialog-insertComplete" title="Insert complete">
+	<p>
+		<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+		Your recipe has been inserted successfully.
+	</p>
+</div>
+
 <button id="bAdd">Add new Recipe</button>
 <div id="dialogAdd" title="Add new Recipe">
 	<p>Please provide details for your recipe.</p>
 
 	<form>
 	<fieldset>
-		<p><label for="name">Title of Recipe</label><br/>
-		<input type="text" name="name" id="name" size="50" class="text ui-widget-content ui-corner-all" /></p>
+		<p><label for="recipeName">Title of Recipe</label><br/>
+		<input type="text" name="recipeName" id="recipeName" size="50" class="text ui-widget-content ui-corner-all" /></p>
 		
 		<p><label for="ingredients">Ingredients</label><br/>
 		
@@ -160,16 +248,6 @@ include 'config.php';
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>20</td>
-            <td>Gramm</td>
-            <td>Zucker</td>
-        </tr>
-        <tr>
-            <td>500</td>
-            <td>Gramm</td>
-            <td>Butter</td>
-        </tr>
     </tbody>
 </table>
 		</p>
@@ -180,6 +258,19 @@ include 'config.php';
 		
 		<p><label for="preparation">Preparation</label><br/>
 		<textarea name="preparation" id="preparation" value="" cols="50" rows="8" class="text ui-widget-content ui-corner-all" ></textarea></p>
+	</fieldset>
+	</form>	
+</div>
+
+<div id="dialogAddIngredient" title="Add Ingredient to recipe">
+	<form>
+	<fieldset>
+		<p><label for="ingAmount">Amount</label><br/>
+		<input type="text" name="ingAmount" id="ingAmount" class="text ui-widget-content ui-corner-all" /></p>
+		<p><label for="ingUnit">Unit</label><br/>
+		<input type="text" name="ingUnit" id="ingUnit" class="text ui-widget-content ui-corner-all" /></p>
+		<p><label for="ingIngredient">Ingredient</label><br/>
+		<input type="text" name="ingIngredient" id="ingIngredient" class="text ui-widget-content ui-corner-all" /></p>
 	</fieldset>
 	</form>	
 </div>
