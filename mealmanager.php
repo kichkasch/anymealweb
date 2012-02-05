@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html>
         <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
                 <title>JumiMeal Meal Manager</title>
+                <!-- jquery imports -->
                 <link type="text/css" href="css/sunny/jquery-ui-1.8.16.custom.css" rel="stylesheet" />  
                 <script type="text/javascript" src="scripts/jquery-1.6.2.min.js"></script>
                 <script type="text/javascript" src="scripts/jquery-ui-1.8.16.custom.min.js"></script> 
-                
 				    <!-- tiny table stuff -->
 				    <link href="css/jquery.ui.tinytbl.css" rel="stylesheet" type="text/css" />
 				    <script src="scripts/jquery.ui.tinytbl.js" type="text/javascript"></script>
-				    <!-- tiny table stuff -->
-				             
-                               
+                <!-- my own imports -->
                 <script src="scripts/jumimeal.js" type="text/javascript"></script>
-                
 					 <link href="css/jumimeal.css" rel="stylesheet" type="text/css" />
-
         </head>
         
 <?php
@@ -42,6 +38,7 @@ include 'anymeal_dialogs.php';
 <?php
 $linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
 mysql_select_db($database, $linkID) or die("Could not find database.");
+mysql_set_charset('utf8',$linkID);
 $query = "SELECT ID, NAME FROM CATEGORIES ORDER BY NAME";
 $resultID = mysql_query($query, $linkID) or die("Data not found.");
 for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
@@ -59,6 +56,7 @@ for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 <?php
 $linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
 mysql_select_db($database, $linkID) or die("Could not find database.");
+mysql_set_charset('utf8',$linkID); 
 $query = "SELECT RECIPE.TITLE as TITLE, RECIPE.ID as ID FROM RECIPE ORDER BY TITLE";
 $resultID = mysql_query($query, $linkID) or die("Data not found.");
 for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){

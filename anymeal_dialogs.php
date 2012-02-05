@@ -62,7 +62,7 @@
  include 'config.php'; 
  $linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
  mysql_select_db($database, $linkID) or die("Could not find database.");
-
+ mysql_set_charset('utf8',$linkID); 
  $query2 = "SELECT CATEGORIES.NAME as NAME FROM CATEGORIES ORDER BY NAME";
  $resultID2 = mysql_query($query2, $linkID) or die("Data not found.");
  for($y = 0 ; $y < mysql_num_rows($resultID2) ; $y++){
