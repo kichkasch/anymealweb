@@ -154,13 +154,20 @@ function editCategoryAssociation(recipeId) {
 		url: "ajaxHandler.php",
 		data: "action=getCatsForRecipe& recipeId=" + recipeId,
 		success: function(data){
-				console.log("got from server for categories: " + data); 
-				$.each(data, function(key, val) {
-    				console.log("  got from server for categories: " + val);
+				console.log("got from server for categories: " + data ); 
+
+  				$("#dialogRecipeCategory_items").children('label').each(function() {
+	  					$catText = $.trim($(this).text());
+	  					console.log($catText + " : " + data.indexOf($catText));
+  						$idCB = $(this).attr("for");
+	  					if (data.indexOf($catText) != -1) {
+	  						$("#" + $idCB).attr('checked', true);
+	  					} else {
+							$("#" + $idCB).attr('checked', false);
+	  					}
   				});
 			},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			 //todo
 			 console.log("error on getting cats for recipe");
 			}
 	});						 

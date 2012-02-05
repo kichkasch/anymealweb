@@ -57,7 +57,7 @@
 
 <div id="dialogRecipeCategory" title="Assign Categories to Recipe">
 	<p>Change categories under which recipe <div id="dialogRecipeCat_recipeName"></div> shall be filed.</p>
-
+	<div id="dialogRecipeCategory_items">
 <?php
  include 'config.php'; 
  $linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
@@ -67,8 +67,9 @@
  $resultID2 = mysql_query($query2, $linkID) or die("Data not found.");
  for($y = 0 ; $y < mysql_num_rows($resultID2) ; $y++){
    $row2 = mysql_fetch_assoc($resultID2);
- 	print('<input type="checkbox" id="check_" /><label for="check1">' . $row2['NAME'] .  '</label><br/>');
+ 	print('<input type="checkbox" id="check_' . $y . '" /><label for="check_' . $y . '">' . $row2['NAME'] .  '</label><br/>');
 }
 ?>
+</div> 
 
-</div>
+</div> 
