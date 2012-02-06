@@ -139,6 +139,15 @@ $(function(){
 								}
 							});
 
+							$contDiv.children("div").each(function() {
+								if ($(this).attr("contentType") == 'actionBar'){
+									if ($recoverRecipeActions == false)
+										$recoverRecipeActions = $('#recipeActions').detach();
+									$(this).prepend($recoverRecipeActions);
+									$recoverRecipeActions = false; 
+								}
+							});
+
 			  				$loadDiv.hide();
 			  				$contDiv.show("normal");
 			  				//$loadDiv.empty();
@@ -156,6 +165,9 @@ $(function(){
 	$( "#radio" ).buttonset(); // Obere Liste mit den Kategorien
 	$( "#bAdd" ).button();     // Ein Rezept hinzufügen
 	$( "#ingredButtonSet" ).buttonset(); // im Dialog Rezept hinzufügen - Aktionen für Zutaten
+
+	$("#recipeActions_viewer" ).button();
+	$("#toolbar_recActions").buttonset();
   
   
 	$( "#bAdd" ).click(function() {
@@ -188,6 +200,7 @@ $(document).ready(function() {
 				$(this).next().toggle('slow');
 				return false;
 			}).next().hide();
+	$recoverRecipeActions = $('#recipeActions').detach();
 } );
 
 function convertTable(theTable) {

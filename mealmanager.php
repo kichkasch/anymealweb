@@ -88,12 +88,24 @@ for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
  <td colType="categories" width="10%" style="padding:10px;vertical-align:top;">n.a.</td>
  </tr>
  </table> 
+ <div contentType="actionBar"></div>
  </div>
  </div>
 <?php
 }
 ?>
 
+</div>
+
+<div id="recipeActions">
+<span id="toolbar" class="ui-widget-header ui-corner-all">
+	<button id="recipeActions_viewer">Show in Viewer</button>
+<span id="toolbar_recActions">
+	<button id="recipeActions_delete">Delete Recipe</button> 
+	<button id="recipeActions_edit">Edit Recipe</button>
+	<button id="recipeActions_categories">Edit Categories</button>
+</span>
+</span>
 </div>
 
 </div>
