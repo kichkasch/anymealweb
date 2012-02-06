@@ -56,6 +56,20 @@ if ($action == "addRecipe") {
 	//echo json_encode(array("action"=>"getCatsForRecipe","recipe"=>$recipeId));
 	echo json_encode($cats);
 	unset($cats);
-}
+} elseif($action == "saveCategoryAssociations") {
+	$decoded = json_decode($_POST['json']);
+	$recipeId = $decoded->recID;	
+	
+	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
+	mysql_select_db($database, $linkID) or die("Could not find database.");
+	mysql_set_charset('utf8',$linkID);
 
+	$query = "DELETE FROM CATEGORY WHERE RECIPEID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+	
+	foreach ($decoded->categories as $value) {		
+	 	$query = "INSERT IGNORE INTO CATEGORY (RECIPEID, CATEGORYID) SELECT '" . $recipeId . "', ID FROM CATEGORIES WHERE NAME = '" . $value . "'";
+		$resultID = mysql_query($query, $linkID) or die("Data not found.");	 	
+	 }
+}
 ?>	

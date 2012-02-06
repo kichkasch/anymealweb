@@ -1,7 +1,16 @@
-<div id="dialog-insertComplete" title="Insert complete">
+<!-- generic dialog for errors -->
+<div id="dialog-error" title="Error">
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+		<div id="dialogError_message">An error occurred.</div>
+	</p>
+</div>
+
+<!-- generic dialog for messages -->
+<div id="dialog-message" title="Notification">
 	<p>
 		<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-		Your recipe has been inserted successfully.
+		<div id="dialogMessage_message">Notification</div>
 	</p>
 </div>
 
@@ -56,7 +65,7 @@
 
 
 <div id="dialogRecipeCategory" title="Assign Categories to Recipe">
-	<p>Change categories under which recipe <div id="dialogRecipeCat_recipeName"></div> shall be filed.</p>
+	<p>Change categories under which recipe <div id="dialogRecipeCat_recipeName"> ... </div> shall be filed.</p>
 	<div id="dialogRecipeCategory_items">
 <?php
  include 'config.php'; 
