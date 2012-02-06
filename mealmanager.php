@@ -61,40 +61,34 @@ $query = "SELECT RECIPE.TITLE as TITLE, RECIPE.ID as ID FROM RECIPE ORDER BY TIT
 $resultID = mysql_query($query, $linkID) or die("Data not found.");
 for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
  $row = mysql_fetch_assoc($resultID);
- print("<h3><a href='#'>" . $row['TITLE'] .  "</a>");
- 
+ print("<h3 rec_id='" . $row['ID'] . "'><a href='#'>" . $row['TITLE'] .  "</a>");
  $query2 = "SELECT CATEGORIES.NAME as NAME FROM CATEGORIES, CATEGORY WHERE CATEGORIES.ID = CATEGORY.CATEGORYID AND CATEGORY.RECIPEID = " . $row['ID'] . " ORDER BY NAME";
  $resultID2 = mysql_query($query2, $linkID) or die("Data not found.");
  for($y = 0 ; $y < mysql_num_rows($resultID2) ; $y++){
     $row2 = mysql_fetch_assoc($resultID2);
- 	$cats[] = $row2['NAME'];
 	print("<input type='hidden' category='" . $row2['NAME'] .  "'/>");
  }
- ?>
- </h3>
- <div>
- <table width="100%">
+  print("</h3>");
+  print("<div>");
+  print("<div cont_type='load' style='vertical-align:top; text-align:center;'><img src='images/updateProgress.gif'/></div>");
+  print("<div cont_type='content'>");
+?>
+ 
+ <table width="100%" style="padding:15px">
  <thead>
  <th>Ingredients</th>
- <th>Preparation</th>
+ <th>Instructions</th>
  <?php
  print('<th width="10%">Categories <a onclick="editCategoryAssociation(' . $row['ID'] . ')"><img src="images/edit.png" width="20" height="20" alt="Edit Categories for this Recipe"></a></th>'); 
  ?> 
  </thead>
  <tr>
- <td>n.a.</td>
- <td>n.a.</td>
- <td>
-<?php
- foreach ($cats as $cat) {
-print($cat);
-print("<br/>");
-}
-unset($cats);
-?> 
- </td>
+ <td colType="ingredients" width="20%" style="padding:10px;vertical-align:top;">n.a.</td>
+ <td colType="instructions" width="70%" style="padding:10px;vertical-align:top;">n.a.</td>
+ <td colType="categories" width="10%" style="padding:10px;vertical-align:top;">n.a.</td>
  </tr>
  </table> 
+ </div>
  </div>
 <?php
 }

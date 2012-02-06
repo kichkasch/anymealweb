@@ -71,5 +71,40 @@ if ($action == "addRecipe") {
 	 	$query = "INSERT IGNORE INTO CATEGORY (RECIPEID, CATEGORYID) SELECT '" . $recipeId . "', ID FROM CATEGORIES WHERE NAME = '" . $value . "'";
 		$resultID = mysql_query($query, $linkID) or die("Data not found.");	 	
 	 }
-}
+} elseif($action == "getDetailsForRecipe") {
+	$recipeId = htmlspecialchars(trim($_POST['recipeId']));
+	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
+	mysql_select_db($database, $linkID) or die("Could not find database.");
+	mysql_set_charset('utf8',$linkID); 
+
+	$query = "SELECT CATEGORIES.NAME AS NAME FROM CATEGORIES, CATEGORY WHERE CATEGORY.RECIPEID = '" . $recipeId . "' AND CATEGORY.CATEGORYID = CATEGORIES.ID";
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
+		$row = mysql_fetch_assoc($resultID);
+		$cats[] = $row['NAME'];	
+	}
+
+	$instructions = "";
+	$query = "SELECT INSTRUCTIONS FROM INSTRUCTIONS WHERE RECIPEID = '" . $recipeId . "'";
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
+		$row = mysql_fetch_assoc($resultID);
+		$instructions = $row['INSTRUCTIONS'];	
+	}
+
+	$query = "SELECT DISTINCT EDIBLE.NAME AS NAME FROM EDIBLE, INGREDIENT WHERE INGREDIENT.RECIPEID = '" . $recipeId . "' AND INGREDIENT.EDIBLEID = EDIBLE.ID";
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
+		$row = mysql_fetch_assoc($resultID);
+		$ingredients[] = $row['NAME'];	
+	}
+
+		
+	$ret['id'] = $recipeId;
+	$ret['categories'] = $cats;
+	$ret['instructions'] = $instructions;
+	$ret['ingredients'] = $ingredients;
+	echo json_encode($ret);
+	unset($ret);	
+	}
 ?>	
