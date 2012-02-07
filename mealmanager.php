@@ -20,14 +20,23 @@ include 'config.php';
 ?>   
   
 <body>
-<h1>JumiMeal Meal Manager</h1>
 <div class="demo">
 
 <?php
 include 'anymeal_dialogs.php';     
 ?>  
 
-<button id="bAdd">Add new Recipe</button>
+<span id="toolbarMain" class="ui-widget-header ui-corner-all">
+	<button id="bAdd">Add new Recipe</button>
+<span id="toolbar_MainLinks">
+	<button id="toolbarMain_viewer">Viewer</button>
+	<button id="toolbarMain_photoSelector">Photo Associations</button>
+</span>
+	<button id="toolbarMain_About">About JuMi Meal Manager</button> 
+</span>
+
+<h1 style='text-align:center;'>JumiMeal Meal Manager</h1>
+
 
 <p>
 <div align="center">
@@ -101,10 +110,11 @@ for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
 <span id="toolbar" class="ui-widget-header ui-corner-all">
 	<button id="recipeActions_viewer">Show in Viewer</button>
 <span id="toolbar_recActions">
-	<button id="recipeActions_delete">Delete Recipe</button> 
-	<button id="recipeActions_edit">Edit Recipe</button>
+	<button id="recipeActions_ingredients">Edit Ingredients</button>
+	<button id="recipeActions_instructions">Edit Instructions</button>
 	<button id="recipeActions_categories">Edit Categories</button>
 </span>
+	<button id="recipeActions_delete">Delete Recipe</button> 
 </span>
 </div>
 

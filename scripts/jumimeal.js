@@ -162,12 +162,16 @@ $(function(){
 			}						 
   		}
   	});
-	$( "#radio" ).buttonset(); // Obere Liste mit den Kategorien
 	$( "#bAdd" ).button();     // Ein Rezept hinzufügen
+	$("#toolbar_MainLinks").buttonset();
+	$("#toolbarMain_About" ).button();
+	
+	$( "#radio" ).buttonset(); // Obere Liste mit den Kategorien
 	$( "#ingredButtonSet" ).buttonset(); // im Dialog Rezept hinzufügen - Aktionen für Zutaten
 
 	$("#recipeActions_viewer" ).button();
 	$("#toolbar_recActions").buttonset();
+	$("#recipeActions_delete" ).button();
   
   
 	$( "#bAdd" ).click(function() {
