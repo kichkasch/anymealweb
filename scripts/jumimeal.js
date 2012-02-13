@@ -64,6 +64,33 @@ $(function(){
 					}
 				}
 			});        
+	$( "#dialog-confirmDelete" ).dialog({
+				autoOpen: false,
+				modal: true,
+				buttons: {
+					"Delete Recipe": function() {
+							$.ajax({
+								type: "POST",
+								url: "ajaxHandler.php",
+								data: "action=deleteRecipe& recipeId=" + getRecIdOfSelectedRecipe(),
+								success: function(data){
+										console.log("Recipe sucessfully deleted." ); 
+									},
+								error : function(XMLHttpRequest, textStatus, errorThrown) {
+									 console.log("error on deleting recipe");
+									 console.log("details: " + textStatus);
+									 $("#dialogError_message").text("Could not delete recipe on server.");
+									 $("#dialog-error").dialog("open");
+									}
+							});
+						
+						$( this ).dialog( "close" );
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});        
 	$("#dialog-error").dialog({
 			autoOpen: false,
 			modal: true,
@@ -78,6 +105,15 @@ $(function(){
 			modal: true,
 			buttons: {
 				Ok: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});               
+	$("#dialog-about").dialog({
+			autoOpen: false,
+			modal: true,
+			buttons: {
+				"Close": function() {
 					$( this ).dialog( "close" );
 				}
 			}
@@ -125,17 +161,19 @@ $(function(){
 								if ($(this).attr('colType') == 'ingredients') {
 									$(this).empty();
 									$pane = $(this)
-									data['ingredients'].forEach( function(v,k) {
-										$pane.append(v + ", ");
-										});
+									if (data['ingredients'] != null)
+										data['ingredients'].forEach( function(v,k) {
+											$pane.append(v + ", ");
+											});
 								} else if ($(this).attr('colType') == 'instructions') {
 									$(this).html(data['instructions'].replace(/\n/g, "</br>"));
 								} else {
 									$(this).empty();
 									$pane = $(this)
-									data['categories'].forEach( function(v,k) {
-										$pane.append(v + "</br>");
-										});
+									if (data['categories'] != null)
+										data['categories'].forEach( function(v,k) {
+											$pane.append(v + "</br>");
+											});
 								}
 							});
 
@@ -182,6 +220,31 @@ $(function(){
 	       $("#preparation").val("");
 		return false;
 	});
+	$( "#toolbarMain_viewer" ).click(function() {
+		window.location = "index.php";
+		return false;
+	});
+	$( "#toolbarMain_photoSelector" ).click(function() {
+		window.location = "photoadmin.php";
+		return false;
+	});
+	$( "#toolbarMain_About" ).click(function() {
+		$( "#dialog-about" ).dialog( "open" );
+		return false;
+	});
+	
+	$("#recipeActions_viewer" ).click(function() {
+		window.location = "index.php?recipe_id=" + getRecIdOfSelectedRecipe();
+		return false;
+	});
+	$("#recipeActions_categories" ).click(function() {
+		editCategoryAssociation(getRecIdOfSelectedRecipe());
+		return false;
+	});
+	$("#recipeActions_delete" ).click(function() {
+		$("#dialog-confirmDelete").dialog( "open" );
+		return false;
+	});
 	
 	$( "#bAddIngredient" ).click(function() {
 		$( "#dialogAddIngredient" ).dialog( "open" );
@@ -206,6 +269,17 @@ $(document).ready(function() {
 			}).next().hide();
 	$recoverRecipeActions = $('#recipeActions').detach();
 } );
+
+function getRecIdOfSelectedRecipe() {
+	var index = $("#accordion").accordion("option", "active");
+	var rec_id = -1;
+	$("#accordion").children('h3').each( function () {
+		if ($(this).attr('index') == "" + index) {
+			rec_id = $(this).attr('rec_id');
+		}
+	});
+	return rec_id;
+}
 
 function convertTable(theTable) {
 	theTable.tinytbl({
@@ -256,11 +330,15 @@ function editCategoryAssociation(recipeId) {
   				$("#dialogRecipeCategory_items").children('label').each(function() {
 	  					$catText = $.trim($(this).text());
   						$idCB = $(this).attr("for");
-	  					if (data.indexOf($catText) != -1) {
-	  						$("#" + $idCB).attr('checked', true);
-	  					} else {
-							$("#" + $idCB).attr('checked', false);
-	  					}
+  						if (data == null) {
+  							$("#" + $idCB).attr('checked', false);
+  						} else {
+		  					if (data.indexOf($catText) != -1) {
+		  						$("#" + $idCB).attr('checked', true);
+		  					} else {
+								$("#" + $idCB).attr('checked', false);
+		  					}
+		  				}
   				});
 				$( "#dialogRecipeCategory" ).dialog( "open" );
 			},

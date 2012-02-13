@@ -26,6 +26,9 @@ include 'config.php';
 include 'anymeal_dialogs.php';     
 ?>  
 
+<table width="100%">
+<td style="text-align:left;"><h1>JumiMeal Meal Manager</h1></td>
+<td style="text-align:right;">
 <span id="toolbarMain" class="ui-widget-header ui-corner-all">
 	<button id="bAdd">Add new Recipe</button>
 <span id="toolbar_MainLinks">
@@ -34,9 +37,8 @@ include 'anymeal_dialogs.php';
 </span>
 	<button id="toolbarMain_About">About JuMi Meal Manager</button> 
 </span>
-
-<h1 style='text-align:center;'>JumiMeal Meal Manager</h1>
-
+</td>
+</table>
 
 <p>
 <div align="center">
@@ -70,7 +72,7 @@ $query = "SELECT RECIPE.TITLE as TITLE, RECIPE.ID as ID FROM RECIPE ORDER BY TIT
 $resultID = mysql_query($query, $linkID) or die("Data not found.");
 for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
  $row = mysql_fetch_assoc($resultID);
- print("<h3 rec_id='" . $row['ID'] . "'><a href='#'>" . $row['TITLE'] .  "</a>");
+ print("<h3 rec_id='" . $row['ID'] . "' index='" . $x . "'><a href='#'>" . $row['TITLE'] .  "</a>");
  $query2 = "SELECT CATEGORIES.NAME as NAME FROM CATEGORIES, CATEGORY WHERE CATEGORIES.ID = CATEGORY.CATEGORYID AND CATEGORY.RECIPEID = " . $row['ID'] . " ORDER BY NAME";
  $resultID2 = mysql_query($query2, $linkID) or die("Data not found.");
  for($y = 0 ; $y < mysql_num_rows($resultID2) ; $y++){
@@ -88,7 +90,7 @@ for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
  <th>Ingredients</th>
  <th>Instructions</th>
  <?php
- print('<th width="10%">Categories <a onclick="editCategoryAssociation(' . $row['ID'] . ')"><img src="images/edit.png" width="20" height="20" alt="Edit Categories for this Recipe"></a></th>'); 
+ print('<th width="10%">Categories</th>'); 
  ?> 
  </thead>
  <tr>

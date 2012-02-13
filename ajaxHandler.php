@@ -98,7 +98,6 @@ if ($action == "addRecipe") {
 		$row = mysql_fetch_assoc($resultID);
 		$ingredients[] = $row['NAME'];	
 	}
-
 		
 	$ret['id'] = $recipeId;
 	$ret['categories'] = $cats;
@@ -106,5 +105,25 @@ if ($action == "addRecipe") {
 	$ret['ingredients'] = $ingredients;
 	echo json_encode($ret);
 	unset($ret);	
-	}
+} elseif($action == "deleteRecipe") {
+	$recipeId = htmlspecialchars(trim($_POST['recipeId']));
+	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
+	mysql_select_db($database, $linkID) or die("Could not find database.");
+	mysql_set_charset('utf8',$linkID); 
+	
+	$query = "DELETE FROM CATEGORY WHERE RECIPEID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+
+	$query = "DELETE FROM INSTRUCTIONS WHERE RECIPEID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+	
+	$query = "DELETE FROM SECTION WHERE RECIPEID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+	
+	$query = "DELETE FROM INGREDIENT WHERE RECIPEID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+	
+	$query = "DELETE FROM RECIPE WHERE ID = '" . $recipeId . "'"; 	
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");	
+}
 ?>	

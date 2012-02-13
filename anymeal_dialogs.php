@@ -14,6 +14,28 @@
 	</p>
 </div>
 
+<!-- generic dialog for messages -->
+<div id="dialog-confirmDelete" title="Please confirm">
+	<p>
+		<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+		Please confirm to delete recipe <div id="dialogDelete_message"></div>.
+	</p>
+</div>
+
+
+<div id="dialog-about" title="About JuMiMeal Meal Manager">
+	<p>
+		<p><em>JuMiMeal Meal Manager is a web-based recipe management application.</em></p>
+		<p>Initially, it was intended to be a viewer for the Desktop application <a href="http://www.wedesoft.demon.co.uk/anymeal-api/">Anymeal</a> only.
+		However, due to discontinuation of the development of Anymeal I decided, to also integrate manipulation of recipe information. 
+		Additionally, you can manage photos for your recipe (not part of original Anymeal).</p>
+		
+		<p>(C) 2012 by <a href="mailto:kichkasch@gmx.de">Michael Pilgermann</a>, <a href="https://github.com/kichkasch/anymealweb/wiki" >Home Page</a>,
+		License: <a href="http://www.gnu.org/licenses/gpl.html" >GPL</a></p>
+		
+	</p>
+</div>
+
 
 <div id="dialogAdd" title="Add new Recipe">
 	<p>Please provide details for your recipe.</p>

@@ -10,6 +10,8 @@ $user = "anymeal";
 $pass = "anypass";
 $database = "anymeal";
 
+$viewer_url = "index.php";
+$photoadmin_url = "photoadmin.php";
 
 /* !--
 
