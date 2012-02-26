@@ -64,6 +64,20 @@ $(function(){
 					}
 				}
 			});        
+	$( "#dialogRecipeEditInstruction" ).dialog({
+				autoOpen: false,
+				modal: true,
+				width: 360, 
+				buttons: {
+					"Apply Changes": function() {	
+						saveEditedInstructions();			
+						$( this ).dialog( "close" );
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});        
 	$( "#dialog-confirmDelete" ).dialog({
 				autoOpen: false,
 				modal: true,
@@ -241,6 +255,11 @@ $(function(){
 		editCategoryAssociation(getRecIdOfSelectedRecipe());
 		return false;
 	});
+	$("#recipeActions_instructions" ).click(function() {
+		editRecipeInstuctions(getRecIdOfSelectedRecipe());
+		return false;
+	});
+
 	$("#recipeActions_delete" ).click(function() {
 		$("#dialog-confirmDelete").dialog( "open" );
 		return false;
@@ -326,7 +345,6 @@ function editCategoryAssociation(recipeId) {
 		data: "action=getCatsForRecipe& recipeId=" + recipeId,
 		success: function(data){
 				console.log("got from server for categories: " + data ); 
-
   				$("#dialogRecipeCategory_items").children('label').each(function() {
 	  					$catText = $.trim($(this).text());
   						$idCB = $(this).attr("for");
@@ -348,8 +366,27 @@ function editCategoryAssociation(recipeId) {
 			 $("#dialog-error").dialog("open");
 			}
 	});						 
+}
 
-	}
+function editRecipeInstuctions(recipeId) {
+	$("#dialogRecipeEditInstr_recipeName").text($.trim(recipeId));
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "ajaxHandler.php",
+		data: "action=getInstructionsForRecipe& recipeId=" + recipeId,
+		success: function(data){
+				console.log("got from server for instructions: " + data ); 
+				$("#dialogRecipeEditInstruction_instructions").val(data);
+				$("#dialogRecipeEditInstruction" ).dialog( "open" );
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			 console.log("error on getting instructions for recipe");
+			 $("#dialogError_message").text("Could not load instructions from server.");
+			 $("#dialog-error").dialog("open");
+		}
+	});	
+}
 	
 function saveRecipe(arrayIngredients) {
 	 st = "saving" + "\n" + $("#recipeName").val();
@@ -419,4 +456,26 @@ function saveRecipeCategoryAssociation() {
 				 $("#dialog-error").dialog("open");			
 		}
 	});		
+}
+
+function saveEditedInstructions() {
+	$recId = $.trim($("#dialogRecipeEditInstr_recipeName" ).text());
+	var jsonRet = new Object;
+	jsonRet.recID = $recId;
+	jsonRet.instructions = $("#dialogRecipeEditInstruction_instructions").val();
+	stJson = JSON.stringify(jsonRet);
+	
+	$.ajax( {
+		type: "POST",
+		url: "ajaxHandler.php",
+		data: "action=saveEditedInstructions& json=" + stJson,
+		success: function(){
+				 $("#dialogMessage_message").text("Modified instructions saved sucessfully.");
+				 $("#dialog-message").dialog("open");
+			},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+				 $("#dialogError_message").text("Could not save modified instructions.");
+				 $("#dialog-error").dialog("open");			
+		}
+	});
 }

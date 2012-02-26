@@ -56,6 +56,18 @@ if ($action == "addRecipe") {
 	//echo json_encode(array("action"=>"getCatsForRecipe","recipe"=>$recipeId));
 	echo json_encode($cats);
 	unset($cats);
+} elseif($action == "getInstructionsForRecipe") {	
+	$recipeId = htmlspecialchars(trim($_POST['recipeId']));
+	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
+	mysql_select_db($database, $linkID) or die("Could not find database.");
+	mysql_set_charset('utf8',$linkID); 
+	$query = "SELECT INSTRUCTIONS  FROM INSTRUCTIONS WHERE RECIPEID = '" . $recipeId . "'";
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	for($x = 0 ; $x < mysql_num_rows($resultID) ; $x++){
+		$row = mysql_fetch_assoc($resultID);
+		$instructions_st = $row['INSTRUCTIONS'];
+	}
+	echo json_encode($instructions_st);
 } elseif($action == "saveCategoryAssociations") {
 	$decoded = json_decode($_POST['json']);
 	$recipeId = $decoded->recID;	
@@ -71,6 +83,23 @@ if ($action == "addRecipe") {
 	 	$query = "INSERT IGNORE INTO CATEGORY (RECIPEID, CATEGORYID) SELECT '" . $recipeId . "', ID FROM CATEGORIES WHERE NAME = '" . $value . "'";
 		$resultID = mysql_query($query, $linkID) or die("Data not found.");	 	
 	 }
+} elseif($action == "saveEditedInstructions") {
+	$decoded = json_decode($_POST['json']);
+	$recipeId = $decoded->recID;	
+	
+	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");
+	mysql_select_db($database, $linkID) or die("Could not find database.");
+	mysql_set_charset('utf8',$linkID);
+	
+	$query = "UPDATE INSTRUCTIONS SET INSTRUCTIONS = '" . $decoded->instructions . "' WHERE RECIPEID = '" . $recipeId . "'";
+	$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	
+	if (mysql_affected_rows() == 0)
+	{
+		$query = "INSERT INTO INSTRUCTIONS (ID, INSTRUCTIONS, RECIPEID, TITLE) VALUES ('0', '" . $decoded->instructions . "', '" . $recipeId . "', 'Zubereitung')";
+		$resultID = mysql_query($query, $linkID) or die("Data not found.");
+	}	
+		
 } elseif($action == "getDetailsForRecipe") {
 	$recipeId = htmlspecialchars(trim($_POST['recipeId']));
 	$linkID = mysql_connect($host, $user, $pass) or die("Could not connect to host.");

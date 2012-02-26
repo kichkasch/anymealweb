@@ -64,7 +64,7 @@
 <button id="bClearIngredientList">Clear list</button>
 </div>
 		
-		<p><label for="preparation">Preparation</label><br/>
+		<p><label for="preparation">Instructions</label><br/>
 		<textarea name="preparation" id="preparation" value="" cols="50" rows="8" class="text ui-widget-content ui-corner-all" ></textarea></p>
 	</fieldset>
 	</form>	
@@ -102,5 +102,9 @@
 }
 ?>
 </div> 
-
 </div> 
+
+<div id="dialogRecipeEditInstruction" title="Modify instructions for Recipe">
+	<p>Edit instructions for recipe <div id="dialogRecipeEditInstr_recipeName"> ... </div>.</p>
+	<textarea name="dialogRecipeEditInstruction_instructions" id="dialogRecipeEditInstruction_instructions" value="" cols="50" rows="8" class="text ui-widget-content ui-corner-all" ></textarea>
+</div>
